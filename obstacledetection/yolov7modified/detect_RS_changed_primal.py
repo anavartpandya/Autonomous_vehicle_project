@@ -28,7 +28,6 @@ colorizer.set_option(rs.option.max_distance, 4)  # replace 'float' with your des
 
 def detect(save_img=False):
     source, weights, view_img, save_txt, imgsz, trace = opt.source, opt.weights, opt.view_img, opt.save_txt, opt.img_size, not opt.no_trace
-
     # Directories
     save_dir = Path(increment_path(Path(opt.project) / opt.name, exist_ok=opt.exist_ok))  # increment run
     (save_dir / 'labels' if save_txt else save_dir).mkdir(parents=True, exist_ok=True)  # make dir
@@ -44,11 +43,12 @@ def detect(save_img=False):
     #problem^^^^^^^^^^^^^^^^^^^^
     stride = int(model.stride.max())  # model stride
     imgsz = check_img_size(imgsz, s=stride)  # check img_size
-    if trace:
-        model = TracedModel(model, device, opt.img_size)
-    if half:
-        model.half()  # to FP16
-    
+    # if trace:
+    #     model = TracedModel(model, device, opt.img_size)
+    # if half:
+    #     model.half()  # to FP16
+    model.half()  # to FP16
+
     # Second-stage classifier
     classify = False
     if classify:
